@@ -17,7 +17,7 @@ go to https://pure.app/, then get from local storage **soulStorage:userId** and 
 
 ## Run:
 ```
- **soulStorage:userId** *soulStorage:sessionToken**
+./main.py like soulStorage:userId soulStorage:sessionToken
 ```
 
 ## Oher commands:
