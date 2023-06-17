@@ -26,25 +26,39 @@ class PureApi:
         'x-js-user-agent': 'PureFTP/2.3.0 (JS 1.0; Linux 64-bit Linux x86_64 Chrome 113.0.0.0; ru-RU) SoulSDK/0.22.0 (JS)'
     }
 
-    def __init__(self, user_id: str, session_token: str) -> None:
+    def __init__(
+            self,
+            user_id: str,
+            session_token: str,
+            city_id: int,
+            lang: str,
+            looking_for: str,
+            sexuality: str,
+            temptations: int,
+    ) -> None:
         self.user_id = user_id
         self.session_token = session_token
+        self.city_id = city_id
+        self.lang = lang
+        self.looking_for = looking_for
+        self.sexuality = sexuality
+        self.temptations = temptations
 
     def get_next(self, start_at: datetime, page: int) -> dict:
         start_at = to_timestamp(start_at)
         return self.get_feed(
             params=dict(sorted({
-                'city_id': 524901,
+                'city_id': self.city_id,
                 'have_photo': 'true',
                 'in_pair': 'false',
                 'is_around_city': 'true',
-                'lang': 'ru',
-                'looking_for': 'f,n',
+                'lang': self.lang,
+                'looking_for': self.looking_for,
                 'ordering': '-is_online, -created_at',
                 'page': page,
-                'sexuality': 'h,b,q',
+                'sexuality': self.sexuality,
                 'start_at': start_at,
-                'temptations': 21,
+                'temptations': self.temptations,
             }.items(), key=lambda x: x[0])),
         )
 
@@ -53,17 +67,17 @@ class PureApi:
         end_at = to_timestamp(end_at)
         return self.get_feed(
             params=dict(sorted({
-                'city_id': 524901,
+                'city_id': self.city_id,
                 'end_at': end_at,
                 'have_photo': 'true',
                 'in_pair': 'false',
                 'is_around_city': 'true',
-                'lang': 'ru',
+                'lang': self.lang,
                 'looking_for': 'f,n',
                 'only_new': 'true',
-                'sexuality': 'h,b,q',
+                'sexuality': self.sexuality,
                 'start_at': start_at,
-                'temptations': 21,
+                'temptations': self.temptations,
             }.items(), key=lambda x: x[0])),
         )
 

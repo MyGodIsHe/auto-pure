@@ -9,14 +9,25 @@ import api
 from db import DataBase
 
 
-def main(user_id: str, session_token: str) -> None:
+def main(args: argparse.Namespace) -> None:
     db = DataBase()
     start_at = datetime.now()
     print('start_at', start_at)
     likes = 0
-    pure_api = api.PureApi(user_id, session_token)
+    pure_api = api.PureApi(
+        args.user_id,
+        args.token,
+        args.city_id,
+        args.lang,
+        args.looking_for,
+        args.sexuality,
+        args.temptations,
+    )
     for page in itertools.count(1):
         data = pure_api.get_next(start_at, page)
+        if 'results' not in data:
+            print(data)
+            return
         if not data['results']:
             break
         for row in data['results']:
@@ -69,12 +80,17 @@ if __name__ == '__main__':
     parser_like = subparsers.add_parser('like')
     parser_like.add_argument('user_id')
     parser_like.add_argument('token')
+    parser_like.add_argument('--city-id', type=int, default=524901)
+    parser_like.add_argument('--lang', default='ru')
+    parser_like.add_argument('--sexuality', default='h,b,q')
+    parser_like.add_argument('--temptations', type=int, default=21)
+    parser_like.add_argument('--looking-for', default='f,n')
     subparsers.add_parser('stats')
     parser_search = subparsers.add_parser('search')
     parser_search.add_argument('query')
     args = parser.parse_args()
     if args.action == 'like':
-        main(args.user_id, args.token)
+        main(args)
     elif args.action == 'stats':
         stats()
     elif args.action == 'search':
