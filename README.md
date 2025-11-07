@@ -1,8 +1,17 @@
+# ⚠️ NOT WORKING (Pure API changed)
+
+**Important:** The Pure app has changed its API (checked: 2025-11-07).  
+Requests no longer work.  
+The tool is currently **broken** until the new protocol is reverse-engineered.
+
+---
+
 # auto-pure
-Automation of likes in dating pure app.
-The script allows you to like everyone by the necessary filter.
-The script saves the information about the like in the database, does not put the likes again.
-When the script is running, you cannot use the app on other devices, otherwise authorization will be canceled.
+Automation of likes in the Pure dating app.
+
+The script allows you to like everyone by the required filters.  
+It stores information about each liked user in the database and does not like them again.  
+While the script is running, you cannot use the Pure app on other devices - otherwise your session will be invalidated.
 
 # Usage
 
@@ -13,7 +22,10 @@ poetry install
 
 ## Grab auth data:
 
-go to https://pure.app/, then get from local storage **soulStorage:userId** and **soulStorage:sessionToken**.
+Go to [https://pure.app/](https://pure.app/), then extract from Local Storage:
+
+* **soulStorage:userId**
+* **soulStorage:sessionToken**
 
 ## Run:
 ```
@@ -21,9 +33,18 @@ go to https://pure.app/, then get from local storage **soulStorage:userId** and 
 ```
 
 ## Oher commands:
-* `./main.py search` - search users in local db by description
-* `./main.py stats` - some stats
+* `./main.py search` - search users in the local DB by description
+* `./main.py stats` - show some basic stats
 
 # Algorithm
 
-The protocol is encoded in a special way, if you are interested, then see **calculate_authorization_hash** function.
+The protocol was originally encoded in a specific way.
+If you're interested, check the **calculate_authorization_hash** function.
+
+---
+
+# Current status
+
+* ✅ Repository kept for reference
+* 🛑 Functionality broken due to Pure API update
+* 💬 Contributions welcome (updated endpoints / auth flow)
